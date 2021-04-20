@@ -413,7 +413,7 @@ class ConvGRU2D(ConvRNN2D):
   output_channels = 6
 
   inputs = tf.keras.Input(shape=(steps, height, width, input_channels))
-  layer = tf.keras.layers.ConvGRU2D(filters=output_channels, kernel_size=3)
+  layer = ConvGRU2D.ConvGRU2D(filters=output_channels, kernel_size=3)
   outputs = layer(inputs)
   ```
   """
