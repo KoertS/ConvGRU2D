@@ -3,6 +3,9 @@ Implementation of ConvGRU2D layer in tensorflow keras.
 
 Example:
 ```python
+import tensorflow as tf
+from ConvGRU2D import ConvGRU2D
+
 steps = 10
 height = 32
 width = 32
@@ -10,7 +13,7 @@ input_channels = 3
 output_channels = 6
 
 inputs = tf.keras.Input(shape=(steps, height, width, input_channels))
-layer = ConvGRU.ConvGRU2D(filters=output_channels, kernel_size=3)
+layer = ConvGRU2D(filters=output_channels, kernel_size=3)
 outputs = layer(inputs)
 
 
