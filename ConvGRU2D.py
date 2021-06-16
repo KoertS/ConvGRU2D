@@ -128,10 +128,9 @@ class ConvGRU2DCell(DropoutRNNCellMixin, Layer):
 
     self.dropout = min(1., max(0., dropout))
     self.recurrent_dropout = min(1., max(0., recurrent_dropout))
-    self.state_size = (self.filters, self.filters)
+    self.state_size = (self.filters)
 
   def build(self, input_shape):
-
     if self.data_format == 'channels_first':
       channel_axis = 1
     else:
@@ -170,7 +169,6 @@ class ConvGRU2DCell(DropoutRNNCellMixin, Layer):
 
   def call(self, inputs, states, training=None):
     h_tm1 = states[0]  # previous memory state
-    c_tm1 = states[1]  # previous carry state
 
     # dropout matrices for input units
     dp_mask = self.get_dropout_mask_for_cell(inputs, training, count=3)
@@ -223,8 +221,8 @@ class ConvGRU2DCell(DropoutRNNCellMixin, Layer):
     z = self.recurrent_activation(x_z + h_z)
     r = self.recurrent_activation(x_r + h_r)
     
-    h = (1.0 - z) * c_tm1 + z * self.activation(x_h + h_h)
-    return h, [h,h]
+    h = (1.0 - z) * h_tm1 + z * self.activation(x_h + h_h)
+    return h, [h]
 
 
   def input_conv(self, x, w, b=None, padding='valid'):
